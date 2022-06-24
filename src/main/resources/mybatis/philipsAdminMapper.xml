@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.philips.healthSystems.admin.mapper.PhilipsAdminMapper">
+	
+	
+	<select id="getAnswerNo" parameterType="Map" resultType="String">
+		select get_seq('answer_no') answer_no from dual
+	</select>
+	
+	<select id="loginSession" parameterType="Map" resultType="String">
+		select auth from tbl_health_admin
+		where id= #{id} 
+		and password = #{pw}
+	</select>
+	
+	
+	<select id="getGroupList" parameterType="Map" resultType="com.philips.healthSystems.admin.response.adminGetGroupResponse">
+		SELECT GroupPkId, name, DATE_FORMAT(crt_dt,'%Y-%m-%d') as crt_dt
+		FROM tbl_health_targetGroup
+		WHERE targetId = 1
+	</select>
+
+	<select id="getGroupListby2" parameterType="Map" resultType="com.philips.healthSystems.admin.response.adminGetGroupResponse">
+		SELECT GroupPkId, name, DATE_FORMAT(crt_dt,'%Y-%m-%d') as crt_dt
+		FROM tbl_health_targetGroup
+		WHERE targetId = 2
+	</select>
+
+	<select id="getGroupSendList" parameterType="Map" resultType="com.philips.healthSystems.admin.response.adminGetGroupResponse">
+		SELECT GroupPkId, name, DATE_FORMAT(crt_dt,'%Y-%m-%d') as crt_dt
+		FROM tbl_health_targetGroup
+	</select>
+
+	<update id="updateSession" parameterType="Map">
+		update tbl_health_admin set auth = #{auth}
+		where id= #{id} 
+		and password = #{pw}
+	</update>
+	
+	<update id="logout" parameterType="Map">
+		update tbl_health_admin set auth = NULL
+		where id= #{id} 
+		and password = #{pw}
+	</update>
+	
+	<insert id="insertGroup" parameterType="com.philips.healthSystems.admin.domain.adminGroupParam" useGeneratedKeys="true" keyColumn="GroupPkId" keyProperty="GroupPkId">
+		INSERT INTO tbl_health_targetGroup
+			(name, crt_dt,targetId)
+		VALUES(#{groupName}, now(),#{agreement_type});
+		<selectKey keyProperty="GroupPkId" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<insert id="insertTargetUserForNPS" parameterType="com.philips.healthSystems.admin.domain.SurverUserData" useGeneratedKeys="true" keyColumn="UserPkId" keyProperty="UserPkId">
+		INSERT INTO tbl_health_targetUser
+		(name, mobile, group_no, state, customer_no, crt_dt,case_number,equipment_name)
+		VALUES(#{SurveyUserName}, #{SurveyUserTel}, #{GroupPkId}, #{State}, #{customerNo}, now(),#{caseNumber} , #{EquipmentName});
+		<selectKey keyProperty="UserPkid" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<update id="updateUrl" parameterType="com.philips.healthSystems.admin.domain.SurverUserData">
+		update tbl_health_targetUser set requestUrl = #{SurveyUrl} , url = #{url}
+		where UserPkid= #{UserPkid} 
+	
+	</update>
+	
+	
+	<select id="countPrivateList" parameterType="com.philips.healthSystems.admin.domain.adminTargetUserSelefctParam" resultType="int">
+		SELECT count(*) as count
+			FROM tbl_health_targetUser ttu inner join tbl_health_targetGroup ttg
+			WHERE ttu.group_no  = ttg.GroupPkId
+				AND ttg.targetId = #{targetId}
+			<if test="name != null and name != ''">
+				AND ttu.name = #{name}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND mobile = #{mobile}
+			</if>
+			<if test="group_no != null and group_no != ''">
+				AND group_no = #{group_no}
+			</if>
+			<if test="state != null and state != ''">
+				AND state = #{state}
+			</if>
+			<if test="start_dt != null and start_dt != ''">
+	    	<![CDATA[
+	       	 	AND #{start_dt} <= DATE_FORMAT(ttu.crt_dt,'%Y-%m-%d')
+	    	]]>
+	    	</if>
+	    	<if test="end_dt != null and end_dt != ''">
+	       	 	<![CDATA[
+	       	 	AND DATE_FORMAT(ttu.crt_dt,'%Y-%m-%d') <= #{end_dt}
+	    	]]>
+	    	</if>
+	</select>
+	
+	<select id="targetUserSelect" parameterType="com.philips.healthSystems.admin.domain.adminTargetUserSelefctParam" resultType="com.philips.healthSystems.admin.response.adminTargetUserSelectResponse">
+		SELECT ttu.name as name, mobile, group_no, state, DATE_FORMAT(ttu.crt_dt,'%Y-%m-%d') as crt_dt, ttg.name as groupName, ttu.UserPkid as userPkId, ttu.crt_dt as crtDt
+			FROM tbl_health_targetUser ttu inner join tbl_health_targetGroup ttg
+			WHERE ttu.group_no  = ttg.GroupPkId
+				AND ttg.targetId = #{targetId}
+			<if test="name != null and name != ''">
+				AND ttu.name = #{name}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND mobile = #{mobile}
+			</if>
+			<if test="group_no != null and group_no != ''">
+				AND group_no = #{group_no}
+			</if>
+			<if test="state != null and state != ''">
+				AND state = #{state}
+			</if>
+			<if test="start_dt != null and start_dt != ''">
+	    	<![CDATA[
+	       	 	AND #{start_dt} <= DATE_FORMAT(ttu.crt_dt,'%Y-%m-%d')
+	    	]]>
+	    	</if>
+	    	<if test="end_dt != null and end_dt != ''">
+	       	 	<![CDATA[
+	       	 	AND DATE_FORMAT(ttu.crt_dt,'%Y-%m-%d') <= #{end_dt}
+	    	]]>
+	    	</if>
+				order by crtDt DESC
+				LIMIT #{length} OFFSET #{start}
+				
+	</select>
+	
+	<select id="userDetailSelect" parameterType="com.philips.healthSystems.admin.domain.adminUserDetailParam" resultType="com.philips.healthSystems.admin.response.adminUserDetailResponse">
+		SELECT t.name as name, t.mobile as mobile, requestUrl, group_no, customer_no, state, url, 
+			marketing1_yn, marketing2_all, marketing2_tel, marketing2_sms, 
+			marketing2_dm, marketing2_email, t.crt_dt as crt_dt, sendYN, send_dt, agree_dt, userAuthCode, auth_dt, g.name as groupName,
+			g.targetId as targetId, t.hospital as hospital, t.dept as dept, t.position as position
+			FROM tbl_health_targetUser t
+			INNER JOIN tbl_health_targetGroup g
+			ON t.group_no = g.GroupPkId 
+				WHERE UserPkid = #{userNo}
+	</select>
+	
+	
+	
+	
+	
+	<select id="targetGroupSelect" parameterType="com.philips.healthSystems.admin.domain.adminTargetGroupParam" resultType="com.philips.healthSystems.admin.response.adminTargetGroupResponse">
+		SELECT GroupPkId,name,DATE_FORMAT(crt_dt,'%Y-%m-%d') as crt_dt, groupState, crt_dt as crtDt, targetId
+			FROM tbl_health_targetGroup
+			order by crtDt DESC
+			LIMIT #{length} OFFSET #{start}
+	</select>
+	
+	<select id="targetGroupCount" parameterType="com.philips.healthSystems.admin.domain.adminTargetGroupParam" resultType="int">
+		SELECT count(*)
+			FROM tbl_health_targetGroup
+	</select>
+	
+	
+	<select id="countSendHistoy" parameterType="com.philips.healthSystems.admin.domain.adminSendListParam" resultType="int">
+		SELECT count(*)
+				FROM tbl_health_sendHistory h
+				INNER JOIN tbl_health_targetUser u
+				ON h.UserPkId = u.UserPkid
+				INNER JOIN tbl_health_targetGroup t
+				ON t.GroupPkId = u.group_no 
+					WHERE 1 = 1
+					<if test="name != null and name != ''"> 
+						AND u.name = #{name }
+					</if>
+					<if test="group_no != null and group_no != ''"> 
+						AND u.group_no = #{group_no}
+					</if>
+					<if test="start_dt != null and start_dt != ''">
+			    	<![CDATA[
+			       	 	AND #{start_dt} <= DATE_FORMAT(h.crt_dt,'%Y-%m-%d')
+			    	]]>
+			    	</if>
+			    	<if test="end_dt != null and end_dt != ''">
+			       	 <![CDATA[
+			       	 	AND DATE_FORMAT(h.crt_dt,'%Y-%m-%d') <= #{end_dt}
+			    	]]>
+			    	</if>
+			    	<if test="state != null and state != ''">
+						AND h.state = #{state}
+					</if>
+					<if test="mobile != null and mobile != ''">
+						AND u.mobile = #{mobile}
+					</if>
+	</select>
+	
+	<select id="sendHistoySelect" parameterType="com.philips.healthSystems.admin.domain.adminSendListParam" resultType="com.philips.healthSystems.admin.response.adminSendListResponse">
+		SELECT u.name as name, u.mobile as mobile, h.state as state, DATE_FORMAT(h.crt_dt,'%Y-%m-%d : %T') as crt_dt , t.GroupPkId as group_no, t.name as groupName
+				FROM tbl_health_sendHistory h
+				INNER JOIN tbl_health_targetUser u
+				ON h.UserPkId = u.UserPkid 
+				INNER JOIN tbl_health_targetGroup t
+				ON t.GroupPkId = u.group_no
+					WHERE 1 = 1
+					<if test="name != null and name != ''"> 
+						AND u.name = #{name}
+					</if>
+					<if test="group_no != null and group_no != ''"> 
+						AND u.group_no = #{group_no}
+					</if>
+					<if test="start_dt != null and start_dt != ''">
+			    	<![CDATA[
+			       	 	AND #{start_dt} <= DATE_FORMAT(h.crt_dt,'%Y-%m-%d')
+			    	]]>
+			    	</if>
+			    	<if test="end_dt != null and end_dt != ''">
+			       	 <![CDATA[
+			       	 	AND DATE_FORMAT(h.crt_dt,'%Y-%m-%d') <= #{end_dt}
+			    	]]>
+			    	</if>
+			    	<if test="state != null and state != ''">
+						AND h.state = #{state}
+					</if>
+					<if test="mobile != null and mobile != ''">
+						AND u.mobile = #{mobile}
+					</if>
+					order by h.crt_dt DESC
+				LIMIT #{length} OFFSET #{start}
+	</select>
+	
+	
+	<select id="groupInfoSelect" parameterType="com.philips.healthSystems.admin.domain.adminGroupInfoParam" resultType="com.philips.healthSystems.admin.response.adminGroupInfoResponse">
+			SELECT name,mobile,requestUrl 
+			FROM tbl_health_targetUser
+			WHERE group_no = #{groupNo}
+			LIMIT #{length} OFFSET #{start}
+	</select>
+	
+	<select id="countGroupInfo" parameterType="com.philips.healthSystems.admin.domain.adminGroupInfoParam" resultType="int">
+			SELECT count(*) as count 
+			FROM tbl_health_targetUser
+			WHERE group_no = #{groupNo}
+	</select>
+	
+
+	
+	<select id="login" parameterType="com.philips.healthSystems.admin.domain.Login" resultType="String">
+			SELECT admin_no FROM tbl_health_admin
+				where id= #{id} 
+				and password = #{pw}
+	</select>
+	
+
+	
+	<select id="getSendGroupMember" parameterType="com.philips.healthSystems.admin.domain.adminSendGroupParam" resultType="com.philips.healthSystems.admin.response.adminSendGroupResponse">
+			SELECT UserPkId as userPkId, mobile, requestUrl , state
+			FROM tbl_health_targetUser
+				WHERE group_no = #{groupNo}
+	</select>
+	
+	<update id="updateSendState" parameterType="com.philips.healthSystems.admin.domain.adminUpdateSendParam">
+		update tbl_health_targetUser set state = #{state}, sendYN = #{sendYN} , send_dt = now()
+		where UserPkid= #{userPkId} 
+	
+	</update>
+	
+	
+	<insert id="insertSendLog" parameterType="com.philips.healthSystems.admin.domain.adminSendLogParam">
+		INSERT INTO tbl_health_sendHistory
+			(UserPkId, state, crt_dt)
+			VALUES(#{userPkId}, #{state}, now())
+	</insert>
+	
+	<update id="updateGroupSend" parameterType="com.philips.healthSystems.admin.domain.adminSendGroupParam">
+		UPDATE tbl_health_targetGroup
+			SET  groupState='Y'
+			WHERE GroupPkId= #{groupNo}
+	</update>
+	
+	<select id="getReSendMember" parameterType="com.philips.healthSystems.admin.domain.adminReSendMemberParam" resultType="com.philips.healthSystems.admin.response.adminReSendMemberResponse">
+			SELECT UserPkId as userPkId, mobile, requestUrl , state
+			FROM tbl_health_targetUser
+				WHERE UserPkid = #{userPkId}
+	</select>
+	
+	<select id="getSendResultMember" parameterType="com.philips.healthSystems.admin.domain.adminReSendMemberParam" resultType="com.philips.healthSystems.admin.response.adminSendResultResponse">
+			SELECT UserPkId as userPkId, mobile, url , state, DATE_FORMAT(agree_dt ,'%m') as agreeMonth, case_number ,equipment_name
+			FROM tbl_health_targetUser
+				WHERE UserPkid = #{userPkId}
+	</select>
+	
+	
+	
+</mapper>
+<!--
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->

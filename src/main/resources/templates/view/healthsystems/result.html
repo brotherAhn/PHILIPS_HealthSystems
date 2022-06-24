@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Health Systems 요청서</title>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/jquery.form.js"></script>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/js/sleepcare.js"></script>
+</head>
+
+<body>
+<div class="container" style="padding: 10px; margin-bottom: 20px;">
+    <div class="row mt10 info_privacy_txt" style="display:block">
+        <h2>개인정보 처리를 위한 동의서</h2>
+        <strong>주식회사 필립스코리아 귀중</strong><br>
+        <br>
+        주식회사 필립스코리아(“<strong>회사</strong>”)는 귀하의 개인정보를 처리하기 위하여, “개인정보 보호법” 제15조, 제17조 및 제22조에 따라 귀하로부터 명시적인 동의를 받아야 합니다. 다음과 같이 귀하의 개인정보를 처리하는 것에 동의하신다면, 본 동의서의 동의란에 체크하신 후 서명하여 주시기 바랍니다.<br><br>
+
+        <h3>1. [필수] 개인정보의 수집, 이용에 대한 동의</h3>
+        1) 수집∙이용 목적: 고객 방문 후 서비스 만족도 조사 이행 (NPS Onsite Survey) <br>
+        2) 수집∙이용할 개인정보의 내용: 성명, 휴대폰번호, 이메일 주소, 병원명, 부서명, 직책 <br>
+        3) 보유기간: <span class="underline">3년</span> 또는 <span class="underline">동의 철회 시</span>까지 보유, 이용됩니다.<br>
+        <br>
+        ■ 본인은 회사가 위 목적으로 본인의 개인(신용)정보를 수집, 이용하는 것에 동의합니다. <br>
+        &#9312; (<input type="radio" name="rdo01" id="rdo0101" class="val_y" checked="checked" onclick="return(false);"><label for="rdo0101" class="mr20">동의함</label>
+        <input type="radio" name="rdo01" id="rdo0102" onclick="return(false);"><label for="rdo0102">동의하지않음</label>)<br><br>
+        <h3>2. [필수] 개인정보의 제3자 제공에 대한 동의</h3>
+        서비스 만족도 조사를 위하여 아래 제3자에게 귀하의 개인정보가 제공될 수 있습니다.
+        <table class="rwd-table">
+            <tbody>
+            <tr>
+                <th>제공받는 자</th>
+                <th>제공 항목</th>
+                <th>제공받는 자의 개인정보 이용 목적</th>
+                <th>제공받는 자의 보유 및 이용기간</th>
+            </tr>
+            <tr>
+                <td data-th="제공받는 자">MEDALLIA</td>
+                <td data-th="제공 항목">성명, 휴대폰번호, 이메일 주소</td>
+                <td data-th="제공받는 자의 개인정보 이용 목적">서비스 만족도 조사 링크 제공</td>
+                <td data-th="제공받는 자의 보유 및 이용기간"><span class="underline">목적 달성 시까지</span></td>
+            </tr>
+            <tr>
+                <td data-th="제공받는 자">TCK</td>
+                <td data-th="제공 항목">성명, 휴대폰번호, 이메일 주소, <br class="mo-hide">병원명, 부서명, 직책</td>
+                <td data-th="제공받는 자의 개인정보 이용 목적">카카오톡을 활용한 서비스 만족도 조사를 위한 <br class="mo-hide">개인정보 수집, 이용 및 보관</td>
+                <td data-th="제공받는 자의 보유 및 이용기간"><span class="underline">목적 달성 시까지</span></td>
+            </tr>
+            </tbody>
+        </table>
+
+        ■ 본인은 회사가 위 목적으로 본인의 개인정보를 제3자에게 제공하는 것에 동의합니다.<br>
+        &#9313; (<input type="radio" name="rdo02" id="rdo0201" checked="checked" onclick="return(false);" class="val_y"><label for="rdo0201" class="mr20">동의함</label>
+        <input type="radio" name="rdo02" id="rdo0202" onclick="return(false);" ><label for="rdo0202">동의하지않음</label>)
+
+        <h3>3. [필수] 개인정보의 국외 이전에 대한 동의 </h3>
+        회사는 이 귀하의 개인정보를 다음과 같이 국외에 이전하고 있습니다.
+        <table class="rwd-table">
+            <tbody>
+            <tr>
+                <th>이전받는 자</th>
+                <th>소재국</th>
+                <th>이전받는 자의 <br class="mo-hide">개인정보 이용 목적</th>
+                <th>개인정보 항목</th>
+                <th>이전받는 자의<br class="mo-hide">보유 및 이용기간</th>
+            </tr>
+            <tr>
+                <td data-th="이전받는 자">Koninklijke <br class="mo-hide">Philips N.V.</td>
+                <td data-th="소재국">네덜란드</td>
+                <td data-th="이전받는 자의 개인정보 이용 목적">고객정보 및 NPS <br class="mo-hide"> Onsite Survey 등  <br class="mo-hide">데이터 분석 </td>
+                <td data-th="개인정보 항목">성명, 휴대폰번호, 이메일 주소, <br class="mo-hide"> 병원명, 부서명, 직책 </td>
+                <td data-th="이전받는 자의 보유 및 이용기간"><span class="underline">3년</span> 또는 <span class="underline">동의  <br class="mo-hide">철회 시</span>까지 보유, 이용</td>
+            </tr>
+            </tbody>
+        </table>
+        ■ 본인은 회사가 위 목적으로 본인의 개인정보를 국외에 이전하는 것에 동의합니다.<br>
+        &#9314; (<input type="radio" name="rdo03" id="rdo0301" class="val_y" checked="checked" onclick="return(false);"><label for="rdo0301" class="mr20">동의함</label>
+        <input type="radio" name="rdo03" id="rdo0302" onclick="return(false);"><label for="rdo0302">동의하지않음</label>)
+
+        <h3>4. [선택] 개인정보의 마케팅 목적 이용 및 광고성 정보 전송에 대한 동의</h3>
+        1) 개인정보의 수집∙이용 목적: <span class="underline">회사 및 관계사 상품, 서비스 안내 및 이용 권유, 마케팅, 뉴스레터 발송</span><br>
+        2) 수집∙이용 할 개인정보의 내용: 성명, 전화번호, 휴대폰번호, 이메일<br>
+        3) 보유∙이용기간: <span class="underline">3년</span> 또는 <span class="underline">동의 철회 시</span>까지 보유, 이용됩니다.<br>
+        <br>
+        ■ 본인은 회사가 위 목적으로 본인의 개인정보를 수집, 이용하는 것에 동의합니다. <br>
+        &#9320; ( <input type="radio" name="rdo09" id="rdo0901" class="val_y" th:checked="${Marketing1_yn eq 'Y' ? 'checked' : 'false'}" onclick="return(false);"><label for="rdo0901" class="mr20">동의함</label>
+        <input type="radio" name="rdo09" id="rdo0902" onclick="return(false);" th:checked="${Marketing1_yn eq 'N' ? 'checked' : 'false'}"><label for="rdo0902">동의하지않음</label>)<br>
+        ■ 본인은 회사가 아래의 이용 권유 방법으로 광고성 정보를 전송하는 것에 동의합니다.
+        <div class="border-box">
+            &#9321; 이용권유 방법:<br>
+            <input type="radio" name="rdo10" id="rdo1001" class="val_y" th:checked="${Marketing2_all eq 'Y' ? 'checked' : 'false'}" onclick="return(false);"><label for="rdo1001" class="mr20">전체동의</label><br class="mo-show">
+            (
+            <div class="chk-group-box">
+                <input type="checkbox" id="agree_tel" name="agree_tel" class="val_y" th:checked="${Marketing2_tel eq 'Y' ? 'checked' : 'false'}" onclick="return(false);">
+                <label for="agree_tel" class="mr10">전화</label>
+            </div>
+            <div class="chk-group-box">
+                <input type="checkbox" id="agree_sms" name="agree_sms" class="val_y" th:checked="${Marketing2_sms eq 'Y' ? 'checked' : 'false'}" onclick="return(false);">
+                <label for="agree_sms" class="mr10">문자메세지</label>
+            </div>
+            <div class="chk-group-box">
+                <input type="checkbox" id="agree_dm" name="agree_dm" class="val_y" th:checked="${Marketing2_dm eq 'Y' ? 'checked' : 'false'}" onclick="return(false);">
+                <label for="agree_dm" class="mr10">DM</label>
+            </div>
+            <div class="chk-group-box">
+                <input type="checkbox" id="agree_em" name="agree_em" class="val_y" th:checked="${Marketing2_email eq 'Y' ? 'checked' : 'false'}" onclick="return(false);">
+                <label for="agree_em">이메일</label>
+            </div>
+            )<br>
+            <input type="radio" name="rdo10" id="rdo1002" onclick="return(false);" th:checked="${marketing2_dis eq 'Y' ? 'checked' : 'false'}" ><label for="rdo1002">동의하지않음</label><br>
+            상품서비스 안내 등 수집, 이용 목적달성을 위하여 동의한 안내수단으로 연락할 수 있습니다.
+        </div>
+        <br><br>
+        <hr>
+        <br><br>
+        <strong>본인은 상기 내용을 상세히 읽어 보았고, 이에 관하여 충분히 이해하였으며, 본인의 자유로운 의사에 의해 동의하는바, 아래와 같이 날인/서명합니다.</strong><br>
+        <br>
+        <div class="sign-box clearfix">
+            <input type="number" size="4" class="num-year" th:value="*{agree_year}" readonly>년 <input type="number" size="2" th:value="*{agree_month}" readonly>월 <input type="number" size="2" th:value="*{agree_day}" readonly>일<br>
+
+            <!-- label class="num-year" th:text="*{agree_year}"></label>년 <label class="num-year" th:text="*{agree_month}"></label>월 <label class="num-year" th:text="*{agree_day}"></label>일<br-->
+
+
+            <table class="sign-table">
+                <colgroup>
+                    <col style="width: 50px">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>신청인</th>
+                    <td>
+                        <input type="text" style="width: 100px" th:value="*{name}" readonly>
+                        <!-- label class="num-year" th:text="*{name}"></label-->
+                        <span>(인) 또는 서명</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>대리인</th>
+                    <td>
+                        <input type="text" style="width: 100px" readonly>
+                        <span>(인) 또는 서명</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            
+
+
+
+        </div>
+
+    </div>
+    <!--// 동의서 내용 확인 -->
+</div>
+<style>
+    @media (max-width:700px) {
+
+        .navbar-collapse.collapse.in {
+            height: calc(100vh - 44px);
+        }
+
+        .navbar-collapse.collapse {
+            height: 0;
+        }
+    }
+
+    .info_privacy_txt {
+        border: 1px solid #ebebeb;
+        padding: 20px;
+        line-height: 1.4;
+        font-size: 13px;
+        word-break: break-all;
+    }
+
+    .info_privacy_txt .mr20 {
+        margin-right: 20px;
+    }
+
+    .info_privacy_txt .mr10 {
+        margin-right: 10px;
+    }
+
+    .info_privacy_txt h2 {
+        font-size: 16px;
+        text-align: center;
+        text-decoration: underline;
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+
+    .info_privacy_txt h3 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .info_privacy_txt .underline {
+        text-decoration: underline;
+    }
+
+    .info_privacy_txt .chk-group-box {
+        display: inline-block;
+    }
+
+    .info_privacy_txt input[type='radio'],
+    .info_privacy_txt input[type='checkbox'] {
+        visibility: hidden;
+        width: 0;
+    }
+
+    .info_privacy_txt input[type='radio']+label,
+    .info_privacy_txt input[type='checkbox']+label {
+        font-size: 13px;
+    }
+
+    .info_privacy_txt input[type='radio']+label:before,
+    .info_privacy_txt input[type='checkbox']+label:before {
+        content: "";
+        display: inline-block;
+        vertical-align: top;
+        width: 13px;
+        height: 13px;
+        margin-top: 4px;
+        margin-right: 4px;
+        border: 1px solid #ddd;
+    }
+
+    .info_privacy_txt input[type='radio']:checked+label:before,
+    .info_privacy_txt input[type='checkbox']:checked+label:before {
+        content: "";
+        display: inline-block;
+        vertical-align: top;
+        width: 13px;
+        height: 13px;
+        margin-top: 4px;
+        margin-right: 4px;
+        background: url(../img/check-on.png) no-repeat center;
+        background-size: 100%;
+    }
+
+    .info_privacy_txt .half-table,
+    .info_privacy_txt .rwd-table {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .info_privacy_txt table th {
+        word-break: keep-all;
+    }
+
+    .info_privacy_txt .half-table tr {
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .info_privacy_txt .half-table th,
+    .info_privacy_txt .half-table td {
+        padding: 0.5em;
+        font-size: 13px;
+        text-align: center;
+        border-left: 1px solid #ddd;
+        word-break: break-all;
+    }
+
+    .info_privacy_txt .half-table th:first-child,
+    .info_privacy_txt .half-table td:first-child {
+        border-left: none;
+    }
+
+    .info_privacy_txt .rwd-table th {
+        display: none;
+    }
+
+    .info_privacy_txt .rwd-table td {
+        display: block;
+    }
+
+    .info_privacy_txt .rwd-table td:first-child {
+        padding-top: 0.5em;
+    }
+
+    .info_privacy_txt .rwd-table td:last-child {
+        padding-bottom: 0.5em;
+    }
+
+    .info_privacy_txt .rwd-table td:before {
+        content: attr(data-th) ": ";
+        font-weight: normal;
+        display: block;
+        vertical-align: top;
+    }
+
+    .info_privacy_txt .rwd-table th,
+    .info_privacy_txt .rwd-table td {
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .info_privacy_txt .rwd-table {
+        overflow: hidden;
+    }
+
+    .info_privacy_txt .rwd-table th,
+    .info_privacy_txt .rwd-table td {
+        margin: 0.5em 0;
+    }
+
+    .info_privacy_txt .border-box {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .info_privacy_txt .sign-box {
+        text-align: right;
+        line-height: 30px;
+    }
+
+    .info_privacy_txt .sign-box input[type='number'] {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 40px;
+        text-align: center;
+        font-size: 13px;
+        height: 30px;
+        line-height: 28px;
+    }
+
+    .info_privacy_txt .sign-box input[type='number'].num-year {
+        width: 60px;
+    }
+
+    .info_privacy_txt .sign-table {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        width: 240px;
+        float: right;
+    }
+
+    .info_privacy_txt .sign-table td {
+        text-align: right;
+    }
+
+    .info_privacy_txt .sign-table th,
+    .info_privacy_txt .sign-table td {
+        line-height: 30px;
+        padding: 5px 0;
+    }
+
+    .info_privacy_txt .sign-table input[type='text'] {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0;
+        width: 120px;
+        text-align: center;
+        font-size: 13px;
+        height: 30px;
+        line-height: 28px;
+    }
+
+    @media (min-width: 600px) {
+        .info_privacy_txt .mo-show {
+            display: none;
+        }
+
+        .info_privacy_txt .rwd-table th,
+        .info_privacy_txt .rwd-table td {
+            display: table-cell;
+            padding: 0.25em 0.5em;
+            border-left: 1px solid #ddd;
+        }
+
+        .info_privacy_txt .rwd-table th:first-child,
+        .info_privacy_txt .rwd-table td:first-child {
+            padding-left: 0;
+            border-left: none;
+        }
+
+        .info_privacy_txt .rwd-table th:last-child,
+        .info_privacy_txt .rwd-table td:last-child {
+            padding-right: 0;
+        }
+
+        .info_privacy_txt .rwd-table td:before {
+            display: none;
+        }
+
+        .info_privacy_txt .rwd-table th,
+        .info_privacy_txt .rwd-table td {
+            padding: 1em !important;
+            text-align: center;
+        }
+
+        .info_privacy_txt .rwd-table tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .info_privacy_txt .mo-hide {
+            display: none;
+        }
+    }
+
+    .info_privacy_txt .clearfix:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    .info_privacy_txt .sign-box input {
+        border: 1px solid #ddd;
+    }
+</style>
+
+</body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org"
+	xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+	layout:decorator="layout/default">
+<th:block layout:fragment="css">
+<link href="/css/auth.css" rel="stylesheet">
+<style>
+</style>
+</th:block>
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+	</script>
+</th:block>
+<body>
+	<th:block layout:fragment="content">
+		<div class="dashboard-wrapper">
+        <div class="container-fluid">
+            <div class="auth_title" style="margin: auto 0;">
+                <h1>회원가입</h1>
+            </div>
+
+            <form name="frm" id="frm" method="post">
+                <div class="auth_form">
+                    <ul>
+                        <li><input type="text" id="id" name="prePassword" placeholder="아이디" class="auth_ip" data-required="아이디" /></li>
+                        <li><input type="password" id="password" name="password" placeholder="비밀번호" class="auth_ip" data-required="비밀번호" /></li>
+                        <li><input type="password" id="c_password" name="c_password" placeholder="비밀번호 확인" class="auth_ip" data-required="비밀번호 확인" /></li>
+                    </ul>
+                    <a href="#" id="updateBtn" class="btn_auth" onclick="frmSubmit();">가입</a>
+                </div>
+            </form>
+        </div>
+    </div>
+	</th:block>
+</body>
+</html>

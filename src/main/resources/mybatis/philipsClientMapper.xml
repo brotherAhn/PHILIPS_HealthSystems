@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.philips.healthSystems.client.mapper.PhilipsMapper">
+
+	<select id="getConfiramUser" parameterType="com.philips.healthSystems.client.domain.confirmParam" resultType="com.philips.healthSystems.client.response.confirmResponse">
+			select ttu.UserPkId as UserPkId, ttG.targetId as targetId
+			From tbl_health_targetUser ttu
+			inner join tbl_health_targetGroup ttG on ttu.group_no = ttG.GroupPkId
+				where ttu.name = #{name}
+					and ttu.mobile = #{mobile}
+					and ttu.url = #{userURL}
+					
+	</select>
+	
+	<select id="getUserAuth" parameterType="com.philips.healthSystems.client.domain.confirmParam" resultType="String">
+		select userAuthCode 
+			From tbl_health_targetUser
+				where name = #{name}
+					and mobile = #{mobile}
+					and url = #{userURL}
+	</select>
+	
+	<update id="setUserAuth" parameterType="com.philips.healthSystems.client.domain.confirmParam">
+		update tbl_health_targetUser set userAuthCode = #{auth} , auth_dt = now(), state = #{state}
+			where name = #{name}
+					and mobile = #{mobile}
+					and url = #{userURL}
+	</update>
+	
+	<select id="getUserPkId" parameterType="String" resultType="String">
+		select state from tbl_health_targetUser
+			where url  = #{value}
+			
+	</select>
+	
+	<select id="getUserInfo" parameterType="String" resultType="com.philips.healthSystems.client.response.agreeUserResponse">
+		select name, mobile from tbl_health_targetUser
+			where url  = #{value}
+			and state != "COM"
+	</select>
+	
+	<update id="userAgreeUpdate" parameterType="com.philips.healthSystems.client.domain.jsonAgreeParam">
+		UPDATE tbl_health_targetUser
+				SET state=#{state}, marketing1_yn = #{marketing1_yn}, marketing2_all = #{marketing2_all},
+				marketing2_tel = #{marketing2_tel}, marketing2_sms = #{marketing2_sms}, 
+				marketing2_dm = #{marketing2_dm}, marketing2_email = #{marketing2_email}, 
+				agree_dt = now()
+					WHERE name = #{name}
+					and mobile = #{mobile}
+					and url = #{url}
+					and state = "COF"
+	</update>
+	
+	<select id="getUserPkIdForResult" parameterType="String" resultType="String">
+		select UserPkid from tbl_health_targetUser
+			where url  = #{value}
+			and state = "COM"
+	</select>
+	
+	<select id="getUserInfoResult" parameterType="com.philips.healthSystems.client.domain.agreeResultParam" resultType="com.philips.healthSystems.client.response.agreeUserResultResponse">
+		SELECT ttu.name as name , ttu.mobile as mobile, ttu.marketing1_yn as marketing1_yn, ttu.marketing2_all as marketing2_all, ttu.marketing2_tel as marketing2_tel, ttu.marketing2_sms as marketing2_sms,
+		       ttu.marketing2_dm as marketing2_dm, ttu.marketing2_email as marketing2_email, DATE_FORMAT(ttu.agree_dt ,'%Y') as agree_year, DATE_FORMAT(ttu.agree_dt ,'%m') as agree_month,
+		       DATE_FORMAT(ttu.agree_dt ,'%d') as agree_day, ttG.targetId as targetId
+			From tbl_health_targetUser ttu
+				 inner join tbl_health_targetGroup ttG on ttu.group_no = ttG.GroupPkId
+			where url  = #{url}
+				AND ttu.name = #{name}
+				AND	mobile = #{mobile}
+				AND state = 'COM'
+	</select>
+
+	<select id="getSendResultMember" parameterType="com.philips.healthSystems.client.domain.jsonAgreeParam" resultType="com.philips.healthSystems.client.response.sendResultResponse">
+			SELECT UserPkId as userPkId, mobile, url , state, DATE_FORMAT(agree_dt ,'%m') as agreeMonth, case_number,equipment_name
+						FROM tbl_health_targetUser
+							WHERE name = #{name}
+								and mobile = #{mobile}
+								and url = #{url}
+	</select>
+
+	<select id="getHospitalList" parameterType="com.philips.healthSystems.client.domain.hospitalListParam" resultType="com.philips.healthSystems.client.response.hostpitalListResponse">
+		select * from tbl_agreement_hospital_list
+		<if test="name != null and name != ''">
+			WHERE REPLACE(name,' ','') like CONCAT('%',REPLACE(#{name},' ',''),'%')
+		</if>
+	</select>
+
+
+	<update id="userAgreeUpdateAgreement2" parameterType="com.philips.healthSystems.client.domain.jsonAgreeParam">
+		UPDATE tbl_health_targetUser
+		SET state=#{state}, marketing1_yn = #{marketing1_yn}, marketing2_all = #{marketing2_all},
+			marketing2_tel = #{marketing2_tel}, marketing2_sms = #{marketing2_sms},
+			marketing2_dm = #{marketing2_dm}, marketing2_email = #{marketing2_email},
+			agree_dt = now(),hospital = #{hospital}, position = #{position}
+		<if test="dept != null and dept != ''">
+			, dept = #{dept}
+		</if>
+		WHERE name = #{name}
+		  and mobile = #{mobile}
+		  and url = #{url}
+		  and state = "COF"
+	</update>
+
+</mapper>
+<!--
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->

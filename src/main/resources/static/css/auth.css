@@ -1,0 +1,149 @@
+* html body img {
+	margin: none;
+	padding: none;
+} /*for IE 6*/
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+div, ul, ol {
+	list-style: none;
+}
+
+button {
+	background: none;
+	border: 0;
+    text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.clfix {
+	display: inline-block;
+}
+
+.clfix {
+	display: block;
+}
+
+* html .clfix {
+	height: 1%;
+} /* hides from ie-mac */
+.clfix {
+	zoom: 1;
+} /*for ie 5.5-7*/
+
+/* 링크 박스 안뜨게.. */
+a, img {
+	selector-dummy: expression(this.hideFocus = true);
+}
+
+a {
+	color: #666;
+	text-decoration: none;
+}
+
+a:link, a:visited {
+	color: #666;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	color: #222;;
+}
+
+a:active {
+	color: #666;
+}
+
+/* AUTH */
+.auth_wrap {
+	position: fixed;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	margin-top: -150px;
+}
+
+.auth_title {
+	text-align: center;
+	height: 100%;
+	border-bottom: 1px solid #dddddd;
+	padding-bottom: 15px;
+}
+
+.auth_title h1 {
+	font-weight: bold;
+	margin-bottom:0;
+	font-size:20px;
+}
+
+.auth_title h2 {
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	padding-bottom: 12px;
+}
+
+.auth_form {
+	width: 363px;
+	margin: 0 auto;
+	padding: 38px 0 42px;
+	font-size: 0;
+	line-height: 0;
+}
+
+.auth_form li {
+	margin-bottom: 14px;
+}
+
+.auth_form li .auth_ip {
+	width: 100%;
+	height: 36px;
+	border: 1px solid #a3a3a3;
+	padding: 0 15px;
+	box-sizing: border-box;
+	font-size: 14px;
+	line-height: 36px;
+	color: #929292;
+	border-radius: 5px;
+}
+
+.auth_form a.btn_auth {
+	display: block;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	background: #4e73df;
+	color: #fff;
+	font-size: 14px;
+	border-radius: 5px;
+	border-color: #4e73df;
+}
+
+.auth_copy {
+	text-align: center;
+	font-size: 11px;
+	color: #0e0e0e;
+	line-height: 13px;
+	font-weight: bold;
+	letter-spacing: 0.05em;
+}
+
+.default_btn {
+	margin-top: 10px;
+	background-color: #FFF;
+	color: #000;
+	border: 1px solid #000;
+	display: block;
+	height: 41px;
+	line-height: 41px;
+	text-align: center; font-size : 16px;
+	border-radius: 5px;
+	font-size: 16px;
+}

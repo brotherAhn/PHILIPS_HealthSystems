@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org"
+	xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+	layout:decorator="layout/default">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.css">
+</th:block>
+<th:block layout:fragment="script">
+<script th:src="@{/js/data_table_util.js}"></script>
+<script th:src="@{/js/tck.js}"></script>
+	<script type="text/javascript">
+		//datepicker
+	   $(function() {	
+		$('.datepicker').datepicker({
+		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+		    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
+		    clearBtn : false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+		    disableTouchKeyboard : false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
+		    immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false 
+		    multidate : false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false 
+		    templates : {
+		    	leftArrow: '&laquo;',
+		        rightArrow: '&raquo;'
+		    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징 
+		    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
+		    todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false 
+		    language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+		    
+		});//datepicker end
+	});//ready end
+		//Tooltip
+		$('a').tooltip('hide');
+		//Popover
+		$('.popover-pop').popover('hide');
+		//Dropdown
+		$('.dropdown-toggle').dropdown();
+		
+	</script>
+	
+	<script>
+		/*<![CDATA[*/
+		
+		var setData = [];
+		setData.push({ formID : "Searchfrm" ,targatID : "groupNo", val : "[[ ${param.groupNo} ]]" });
+
+		/* 2020.09.09 HSH 페이지 관련 추가 */
+		setData.push({ formID : "Searchfrm" ,targatID : "pageNo", val : "[[ ${param.pageNo} ]]" });
+			
+		$(document).ready(function() {
+			
+			TckJS.PageUtil.init(setData,null);
+			
+			
+			var dataTable_serach = function ( d ) {
+			      return $.extend( {}, d,  {
+						 "groupNo": $('#groupNo').val(),
+					  	 "pageNo": $('#pageNo').val()
+					 });
+			    };
+
+			    var dataTable_columns = [
+		                { data: "name" },
+		                { data: "mobile" },
+		                { data: "requestUrl" }
+		         ];
+				var dataTable_order = [6, 'desc']; 
+				DataTableUtil.init($('#dataTable'),"/ajax/groupInfo/list" ,dataTable_serach ,  dataTable_columns,dataTable_order);
+				
+				
+		});
+		function ExcelDown(){
+			$("#Searchfrm").attr("action","/admin/ajax/excel/groupInfo/list");
+			$("#Searchfrm").submit();
+		}
+		
+		/*]]>*/
+	</script>
+</th:block>
+<body>
+	<th:block layout:fragment="content">
+	<div class="dashboard-wrapper">
+        <!-- 화면구성 -->
+        <nav aria-label="breadcrumb">
+					  <ol class="breadcrumb">
+					    <li class="breadcrumb-item"><a href="/admin_home">홈</a></li>
+					    <li class="breadcrumb-item active"><a href="admin_private">개인정보 활용 동의서</a></li>
+					    <li class="breadcrumb-item"><a href="#"></a></li>
+					  </ol>
+					</nav>
+        <div class="card mb-3">
+            <!-- 검색 조건 -->
+            <form name="Searchfrm" id="Searchfrm" method="GET">
+            	<input type="hidden" id="pageNo" name="pageNo"/>
+            	<input type="hidden" id="groupNo" name="groupNo"/>
+            </form>
+            <!--// 검색 조건 -->
+            <!-- 검색 결과 -->
+            <div>
+            	<div style="width:50%;float: left;text-align:left;margin-top: 10px;">
+            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            		<span id="txtTotal"></span>명
+            	</div>
+            	<div style="width:50%;float: right;text-align:right">
+            		<button onclick="ExcelDown()" class="btn btn-success btn-sm" style="margin: 10px;">엑셀 다운로드</button>
+            	</div>
+            </div>
+            <div id="dt_example" class="example_alt_pagination">
+                <table style="font-size:12px;"class="table table-condensed table-striped table-hover table-bordered pull-left" id="dataTable">
+                    <colgroup>
+                        <col style="width:10%">
+                        <col style="width:30%">
+                        <col />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>성명</th>
+                        <th>핸드폰 번호</th>
+                        <th>URL</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+	                    
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                </div>
+            </div>
+        </div>
+		
+		
+	</th:block>
+</body>
+</html>

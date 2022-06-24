@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Health Systems 요청서</title>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href=" /css/style.css">
+	<script src="/js/jquery.form.js"></script>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/js/sleepcare.js"></script>
+	<link rel="shortcut icon" href="../img/favicon.ico">
+	<script src="/js/common.js"></script>
+	
+<script>
+	function doSubmit(){
+		
+		var data = $("#authFrm").serializeObject();	
+		var name = $("#name").val();
+		var mobile = $("#mobile").val();
+		if(name.trim() == ""){
+			alert("이름을 입력해 주세요.");
+			return;
+		}
+		if(mobile.trim() == ""){
+			alert("전화번호를 입력해 주세요.");
+			return;
+		}
+		$.ajax({
+            type: "post",
+            url: "/complete/json/result",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (result) {
+				if(result.code == "0001"){
+					$("#authFrm").attr("action", result.msg);
+					$("#authFrm").attr("method", "post");
+					$("#authFrm").submit();
+				}else{
+					alert(result.msg);
+				}
+            },
+            error: function (xhr, textStatus, errorThrown) {
+
+            	
+            }
+        }).done(function () {
+
+        });
+		
+		
+	}
+</script>
+</head>
+<body>
+	<header>
+		<div class="container clearfix">
+			
+				<img src="/img/logo.png" class="logo" alt="필립스">
+			
+		</div>
+	</header>
+	<main>
+		<div class="login-container">
+			<h1>본인확인</h1>
+			<form id="authFrm">
+				<input type="hidden" id="url" name="url" th:value="*{user}">
+				<div class="login-group">
+					<label>고객명</label>
+					<input onkeypress="nonHangulSpecialKey()" id="name" name="name" type="text">
+				</div>
+				<div class="login-group">
+					<label>휴대폰 번호</label>
+					<input onkeypress="nonHangulSpecialKey()" id="mobile" name="mobile" type="tel" placeholder="숫자만 입력해 주세요.">
+				</div>
+				<!--div class="chk-group">
+				<p class="login-info">
+					전자문서는 종이문서로 제공되는 것과 동일한 의미 및 효력을 갖습니다.<br>
+					또한 문서의 서명된 당신의 전자서명은 당신이 종이문서에 잉크로 서명한 것과 동일한 의미 및 효력을 갖습니다.
+				</p>
+				<input type="checkbox" id="chk-login"><label for="chk-login">위 내용을 확인하였습니다.</label>
+				</div-->
+				<button type="button" class="btn-login" onclick="doSubmit()"> 확인</button>
+			</form>
+		</div>
+	</main>
+	<style>
+		body{
+			height: 100vh;
+		}
+		.login-container{
+			margin: 40px auto;
+			width: 100%;
+			box-sizing: border-box;
+			max-width: 500px;
+			padding: 20px;
+		}
+		.login-container h1{
+			font-size: 24px;
+			font-weight: 700;
+			margin-bottom: 26px;
+		}
+		.login-container input{
+			width: 100%;
+			margin-top: 4px;
+			padding: 6px 13px;
+			border-radius: 2px;
+			margin-bottom: 20px;
+		}
+		.login-container label{
+			font-size: 16px;
+			line-height: 1.5;
+		}
+		.login-container .chk-group{
+			margin-top: 0;
+		}
+		.login-container .chk-group label{
+			padding-left: 33px;
+			margin-top: 20px;
+		}
+		.login-container button{
+			margin-top: 20px;
+			padding: 15px 0;
+			width: 100%;
+			border: 0;
+			margin-top: 30px;
+			background: #0066a1;
+			color: #fff;
+			text-align: center;
+			font-size: 16px;
+			line-height: 1;
+			border-radius: 2px;
+		}
+		.login-container .login-info{
+			padding: 20px;
+			border: 1px solid #b9bbc7;
+			background :#efefef;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+	</style>
+</body>
+</html>

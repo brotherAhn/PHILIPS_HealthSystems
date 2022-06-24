@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org"
+	xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+	layout:decorator="layout/default">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css"
+		href="/css/bootstrap-datepicker.css">
+</th:block>
+<th:block layout:fragment="script">
+	<script src="/js/jquery.dataTables.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/bootstrap-datepicker.ko.min.js"></script>
+	<script src="/js/excel.js"></script>
+	<script type="text/javascript">
+	</script>
+</th:block>
+<body>
+	<th:block layout:fragment="content">
+		<div class="dashboard-wrapper">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item active"><a href="/admin_home">홈</a></li>
+					<li class="breadcrumb-item active"><a href="/admin_home"></a></li>
+				</ol>
+			</nav>
+			 
+			<div class="card mb-3">
+				<!-- 화면구성
+				<table class="table table-bordered" style="font-size: small;">
+					<tr>
+						<td>CO 동의서</td>
+						<td><span th:text="${agree}"></span> 건</td>
+						<td>개인정보 활용 동의서</td>
+						<td><span th:text="${private}"></span> 건</td>
+					</tr>
+					<tr>
+						<td>CO 설치요청서</td>
+						<td><span th:text="${install}"></span> 건</td>
+						<td>재처방 관련 서류 등록</td>
+						<td><span th:text="${prescription}"></span> 건</td>
+					</tr>
+					<tr>
+						<td>1주년 필터 요청</td>
+						<td><span th:text="${filter}"></span> 건</td>
+						<td>슬립 코치 콜 접수</td>
+						<td><span th:text="${coach}"></span> 건</td>
+					</tr>
+					<tr>
+						<td>반납 요청</td>
+						<td><span th:text="${return}"></span> 건</td>
+						<td>질의</td>
+						<td><span th:text="${qna}"></span> 건</td>
+					</tr>
+				</table>
+				-->
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>

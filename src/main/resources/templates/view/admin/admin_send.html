@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org"
+	xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
+	layout:decorator="layout/default">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.css">
+</th:block>
+<th:block layout:fragment="script">
+<script th:src="@{/js/data_table_util.js}"></script>
+<script th:src="@{/js/tck.js}"></script>
+	
+	<script type="text/javascript">
+		//datepicker
+	   $(function() {	
+		$('.datepicker').datepicker({	
+		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
+		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
+		    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true
+		    clearBtn : false, //날짜 선택한 값 초기화 해주는 버튼 보여주는 옵션 기본값 false 보여주려면 true
+		    disableTouchKeyboard : false,	//모바일에서 플러그인 작동 여부 기본값 false 가 작동 true가 작동 안함.
+		    immediateUpdates: false,	//사용자가 보는 화면으로 바로바로 날짜를 변경할지 여부 기본값 :false 
+		    multidate : false, //여러 날짜 선택할 수 있게 하는 옵션 기본값 :false 
+		    templates : {
+		    	leftArrow: '&laquo;',
+		        rightArrow: '&raquo;'
+		    }, //다음달 이전달로 넘어가는 화살표 모양 커스텀 마이징 
+		    showWeekDays : true ,// 위에 요일 보여주는 옵션 기본값 : true
+		    todayHighlight : true ,	//오늘 날짜에 하이라이팅 기능 기본값 :false 
+		    language : "ko"	//달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
+		    
+		});//datepicker end
+	});//ready end
+		//Tooltip
+		$('a').tooltip('hide');
+		//Popover
+		$('.popover-pop').popover('hide');
+		//Dropdown
+		$('.dropdown-toggle').dropdown();
+		/*
+		$(document).ready(function() {
+			$('#cotable').dataTable({
+				"pagingType": "full_numbers",
+				"language": {
+				    "paginate": {
+				      "first": '&laquo&laquo;',
+				      "previous": "&laquo;",
+				      "next": '&raquo;',
+				      "last": "&raquo;&raquo;"
+				    }
+				},
+				"lengthMenu":[6],
+				dom: 'Bfrtip',
+				bFilter: false,
+				fnDrawCallback : numberformat(),
+				bSort: false,
+				bInfo: false,
+				buttons: [
+					{
+						extend: 'excel'
+						,text: '엑셀 다운로드'
+						,filename: '개인정보 활용 동의서'
+						,title : null
+						,className :'btn btn-sm btn-success'
+					},
+				]
+			});
+			$('.format-mobile').text(function() {
+			    var str = $(this).text().trim();    
+			    var phone = str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+			    $(this).text(phone);
+			});
+			
+			
+			closeloading();
+		})
+		*/
+	</script>
+	
+	<script>
+		/*<![CDATA[*/
+		$.ajax({
+			type: "POST",
+			url: "/ajax/get/group/sendList",
+			data: "",
+			async: false,
+			processData: false,
+			contentType: false,
+			success: function (res) {
+				var html = "<option value=''>전체</option>";
+				for(var i = 0; i < res.length; i++){
+				    html += "<option value='"+res[i].groupPkId+"'>"+res[i].name+"</option>";
+				}
+				$("#group_no").html(html);
+				$("#group_no").select2();
+			},
+			error: function (err) {
+				/* 통신 에러 발생시 process */
+				// alert(err.status);
+				// alert(err.statusText);
+				alert("오류가 발생하였습니다.");
+				console.log(err);
+			}
+		});
+		
+		var setData = [];
+		setData.push({ formID : "Searchfrm" ,targatID : "name", val : "[[ ${param.name} ]]" });
+		setData.push({ formID : "Searchfrm" ,targatID : "mobile", val : "[[ ${param.mobile} ]]" });
+		setData.push({ formID : "Searchfrm" ,targatID : "start_dt", val : "[[ ${param.start_dt} ]]" });
+		setData.push({ formID : "Searchfrm" ,targatID : "end_dt", val : "[[ ${param.end_dt} ]]" });
+		setData.push({ formID : "Searchfrm" ,targatID : "state", val : "[[ ${param.state} ]]" });
+		setData.push({ formID : "Searchfrm" ,targatID : "group_no", val : "[[ ${param.group_no} ]]" });
+		$("#group_no").val("[[ ${param.group_no} ]]").trigger('change');
+		/* 2020.09.09 HSH 페이지 관련 추가 */
+		setData.push({ formID : "Searchfrm" ,targatID : "pageNo", val : "[[ ${param.pageNo} ]]" });
+			
+		$(document).ready(function() {
+			
+			TckJS.PageUtil.init(setData,null);
+			$('input[name=state]:input[value='+'"[[ ${param.state} ]]"'+' ]').attr("checked",true);
+			var dataTable_serach = function ( d ) {
+			      return $.extend( {}, d,  {
+						 "name": $('#name').val(),
+						 "mobile": $('#mobile').val(),
+						 "start_dt": $('#start_dt').val(),
+						 "end_dt": $('#end_dt').val(),
+						 "state": $('input[name=state]:checked').val(),
+						 "group_no": $('#group_no').val(),
+					  	 "pageNo": $('#pageNo').val()
+					 });
+			    };
+
+			    var dataTable_columns = [
+		                { data: "name" },
+		                { data: "mobile" },
+		                { data: "stateData" },
+		                { data: "groupName" },
+		                { data: "crt_dt" }
+		         ];
+				var dataTable_order = [6, 'desc']; 
+				DataTableUtil.init($('#dataTable'),"/ajax/send/list" ,dataTable_serach ,  dataTable_columns,dataTable_order);
+				
+				
+		});
+		
+		
+		/*]]>*/
+	</script>
+</th:block>
+<body>
+	<th:block layout:fragment="content">
+	<div class="dashboard-wrapper">
+        <!-- 화면구성 -->
+        <nav aria-label="breadcrumb">
+					  <ol class="breadcrumb">
+					    <li class="breadcrumb-item"><a href="/admin_home">홈</a></li>
+					    <li class="breadcrumb-item active"><a href="admin_private">발송 이력 확인</a></li>
+					    <li class="breadcrumb-item"><a href="#"></a></li>
+					  </ol>
+					</nav>
+        <div class="card mb-3">
+            <!-- 검색 조건 -->
+            <form name="Searchfrm" id="Searchfrm" method="GET">
+            <input type="hidden" id="pageNo" name="pageNo"/>
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="box-search">
+                            <ul class="search-form">
+                                <li>
+		                            <table class="table" style="font-size: 12px;">
+		                            	<tr>
+		                            		<td><span class="txt01">성명</span></td>
+		                            		<td><input type="text" onkeypress="nonHangulSpecialKey()" name="name" id="name" placeholder="이름을 입력해 주세요" th:value="${#httpServletRequest.getParameter('name')}"></td>
+		                            		<td><span class="txt01">핸드폰 번호</span></td>
+		                            		<td><input type="text" onkeypress="nonHangulSpecialKey()" name="mobile" id="mobile" placeholder="핸드폰 번호를 입력해 주세요" th:value="${#httpServletRequest.getParameter('mobile')}"></td>
+		                            	</tr>
+		                            	<tr>
+		                            		<td><span class="txt01">발송일</span></td>
+		                            		<td><input type="text" id="start_dt" placeholder="시작일 입력" name="start_dt" class="datepicker" readonly th:value="${#httpServletRequest.getParameter('start_dt')}" /> <span class="fa fa-calendar"></span> -
+			                                    <input type="text" id="end_dt" placeholder="종료일 입력" name="end_dt" class="datepicker" readonly  th:value="${#httpServletRequest.getParameter('end_dt')}"/> <span class="fa fa-calendar"></span></td>
+			                            	<td>상태</td>
+		                            		<td>
+				                                <input type="radio" name="state" value="" id="rdo01_01" checked="checked"><label for="rdo01_01">전체</label>
+				                                <input type="radio" name="state" value="NSE" id="rdo01_02"><label for="rdo01_02">미 발송</label>
+				                                <input type="radio" name="state" value="NOT" id="rdo01_03"><label for="rdo01_03">미 확인</label>
+				                                <input type="radio" name="state" value="COF" id="rdo01_04"><label for="rdo01_04">확인</label>
+				                                <input type="radio" name="state" value="COM" id="rdo01_05"><label for="rdo01_05">완료</label>
+				                             </td>
+		                            	</tr>
+		                            	<tr>
+		                            		<td>그룹</td>
+			                            	<td>
+			                            		<select style="width: 170px;" id="group_no" name="group_no">
+			                            		</select>
+			                            	</td>
+		                            	</tr>
+		                            </table>
+		                            </div>
+                                </li>
+                            </ul>
+                        <div class="text-center">
+                            <button class="btn btn-sm btn-primary">검색</button>
+                        </div>
+                        </div>
+                    </div>
+            </form>
+                </div>
+            
+            <!--// 검색 조건 -->
+            <!-- 검색 결과 -->
+            <div>
+            	<div style="width:50%;float: left;text-align:left">
+            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            		<span id="txtTotal"></span>명
+            	</div>
+            	<div style="width:50%;float: right;text-align:right">
+            		<!--button onclick="ExcelDown()" class="btn btn-success btn-sm" style="margin-bottom: 10px;">엑셀 다운로드</button-->
+            	</div>
+            </div>
+            <div id="dt_example" class="example_alt_pagination">
+                <table id="dataTable"  style="font-size:12px;"class="table table-condensed table-striped table-hover table-bordered pull-left" >
+                    <colgroup>
+                        <col style="width:20%">
+                        <col />
+                        <col style="width:10%">
+                        <col style="width:10%">
+                        <col />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>성명</th>
+                        <th>핸드폰 번호</th>
+                        <th>상태</th>
+                        <th>그룹</th>
+                        <th>발송일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+	                    
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                </div>
+            </div>
+        </div>
+		
+		
+	</th:block>
+</body>
+</html>

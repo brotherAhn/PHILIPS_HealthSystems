@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Health Systems 동의서</title>
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/sleepcare.js"></script>
+<script src="/js/common.js"></script>
+<link rel="shortcut icon" href="../img/favicon.ico">
+</head>
+<body>
+	<header>
+        <div class="container">
+            <ul class="nav nav-tabs">
+                <li>
+                        <img src="../img/logo.png" alt="필립스">
+                </li>
+            </ul>
+        </div>
+    </header>
+	<div class="wrap">
+		<div class="top">
+	        <div class="container">
+	        	<h1>개인정보 활용 동의서</h1>
+	        </div>
+        </div>
+		<main>
+			<div class="container">
+				<form id="frmAgree">
+					<fieldset>
+						<input type="hidden" id="url" name="url" th:value="*{user}">
+						<input type="hidden" id="marketing1_yn" name="marketing1_yn" value = "N">
+						<input type="hidden" id="marketing2_all" name="marketing2_all" value = "N">
+						<input type="hidden" id="marketing2_tel" name="marketing2_tel" value = "N">
+						<input type="hidden" id="marketing2_sms" name="marketing2_sms" value = "N">
+						<input type="hidden" id="marketing2_dm" name="marketing2_dm" value = "N">
+						<input type="hidden" id="marketing2_email" name="marketing2_email" value = "N">
+						<legend class="blind">개인 정보</legend>
+						<label class="lbl01">1. 성명 <span class="fc-primary">*</span></label>
+						<div class="row clearfix">
+							<input type="text" id="agree_name" name="name" readonly="readonly" th:value="*{name}">
+						</div>
+						<label class="lbl01">2. 핸드폰 번호 <span class="fc-primary">*</span></label>
+						<div class="row">
+							<input type="tel" id="agree_mobile" name="mobile" readonly="readonly" th:value="*{mobile}">
+						</div>
+                        <label class="lbl01">3. 병원명 <span class="fc-primary">*</span></label>
+                        <div class="row filebox clearfix">
+                            <input type="text" class="type01 f-left" placeholder="병원 명을 입력해 주세요" name="hospital" id="hospital" readonly="readonly">
+                            <!--button type="button" onclick="hospital_modal()" class="btn01 type02 f-right">병원 명 선택</button-->
+                            <button type="button" onclick="hospital_modal()" class="btn01 type02 f-right">병원 명 선택</button>
+                        </div>
+                        <label class="lbl01">4. 부서명 <span class="fc-primary"></span></label>
+                        <div class="row clearfix">
+                            <input type="text" id="dept" name="dept">
+                        </div>
+                        <label class="lbl01">5. 직책 <span class="fc-primary">*</span></label>
+                        <div class="row clearfix">
+                            <select id="position" name="position" style="border:1px solid #b9bbc7; height:46px; appearance: auto; font-size: 16px;">
+                                <option value="">&#160&#160선택</option>
+                                <option value="팀장">&#160&#160팀장</option>
+                                <option value="파트장">&#160&#160파트장</option>
+                                <option value="의사">&#160&#160의사</option>
+                                <option value="간호사">&#160&#160간호사</option>
+                                <option value="사용자">&#160&#160사용자</option>
+                                <option value="기타">&#160&#160기타</option>
+                            </select>
+                        </div>
+						<div class="chk-group">
+							<div class="row">
+								<input type="checkbox" id="agree_all" name="">
+								<label for="agree_all">(전체동의) 개인(신용) 정보 처리를 위한 동의</label>
+							</div>
+						</div>
+						<div class="chk-group box-type01">
+							<div class="row mt10">
+								<input type="checkbox" id="agree_private_yn" name="private_yn" class="val_y">
+								<label for="agree_private_yn">개인정보의 수집, 이용에 대한 동의 (필수) </label><a onclick="$('.info_private').toggle();">자세한 내용</a>
+							</div>
+						</div>
+						<!-- 동의서 내용 -->
+						<div id="firstCheck" class="row mt10 info_privacy_txt info_private">
+							<h2>개인정보의 수집, 이용 <span class="mo-show">/</span><br class="mo-hide"> 3자 제공(당사 계열사 및 국외 포함)에 대한 동의서</h2>
+							<strong>주식회사 필립스코리아 귀중</strong><br>
+							<br>
+							주식회사 필립스코리아(“<strong>회사</strong>”)는 귀하의 개인(신용)정보를 처리하기 위하여, “개인정보 보호법” 제15조, 제17조, 제22조에 따라 귀하로부터 명시적인 동의를 받아야 합니다. 다음과 같이 귀하의 개인정보를 처리하는 것에 동의하신다면, 본 동의서의 동의란에 체크하신 후 서명하여 주시기 바랍니다.
+							<h3>1. [필수] 개인정보의 수집, 이용에 대한 동의</h3>
+							1) 수집∙이용 목적: 고객 방문 후 서비스 만족도 조사 이행 (NPS Onsite Survey)<br>
+							2) 수집∙이용할 개인정보의 내용: 성명, 휴대폰번호, 이메일 주소, 병원명, 부서명, 직책<br>
+                            3) 보유기간: <span class="underline">3년</span> 또는 <span class="underline">동의 철회 시</span>까지 보유, 이용됩니다.<br>
+							<br>
+							■ 본인은 회사가 위 목적으로 본인의 개인(신용)정보를 수집, 이용하는 것에 동의합니다. <br>
+							&#9312; (<input type="radio" name="rdo01" id="rdo0101" class="val_y"><label for="rdo0101" class="mr20">동의함</label>
+							<input type="radio" name="rdo01" id="rdo0102" class="val_n"><label for="rdo0102">동의하지않음</label>)<br><br>
+
+							<h3>2. [필수] 개인정보의 제3자 제공에 대한 동의</h3><br>
+                            서비스 만족도 조사를 위하여 아래 제3자에게 귀하의 개인정보가 제공될 수 있습니다.
+							<table class="rwd-table">
+								<tbody>
+									<tr>
+										<th>제공받는 자 (연락처)</th>
+										<th>제공 항목</th>
+										<th>제공받는 자의 개인정보 이용 목적</th>
+										<th>제공받는 자의 보유 및 이용기간</th>
+									</tr>
+									<tr>
+										<td data-th="제공받는 자(연락처)">MEDALLIA</td>
+										<td data-th="제공 항목">성명, 휴대폰번호, 이메일 주소</td>
+										<td data-th="제공받는 자의 개인정보 이용 목적">서비스 만족도 조사 링크 제공 </td>
+										<td data-th="제공받는 자의 보유 및 이용기간">목적 달성 시까지</td>
+									</tr>
+                                    <tr>
+                                        <td data-th="제공받는 자(연락처)">TCK</td>
+                                        <td data-th="제공 항목">성명, 휴대폰번호, 이메일 주소, 병원명, 부서명, 직책 </td>
+                                        <td data-th="제공받는 자의 개인정보 이용 목적">카카오톡을 활용한 서비스 만족도 조사를 위한 개인정보 수집, 이용 및 보관 </td>
+                                        <td data-th="제공받는 자의 보유 및 이용기간">목적 달성 시까지</td>
+                                    </tr>
+								</tbody>
+							</table>
+							■ 본인은 회사가 본인의 일반 개인정보를 제3자에 제공하는 것에 동의합니다. <br>
+                            &#9312; (<input type="radio" name="rdo06" id="rdo0601" class="val_y"><label for="rdo0601" class="mr20">동의함</label>
+							<input type="radio" name="rdo06" id="rdo0602" class="val_n"><label for="rdo0602">동의하지않음</label>)<br><br>
+
+							<h3>3. [필수] 개인정보의 국외 이전에 대한 동의</h3>
+                            회사는 이 귀하의 개인정보를 다음과 같이 국외에 이전하고 있습니다.<br>
+							<table class="rwd-table">
+								<tbody>
+									<tr>
+										<th>이전받는 자 (연락처)</th>
+										<th>소재국</th>
+										<th>이전받는 자의 개인정보 이용 목적</th>
+										<th>개인정보 항목</th>
+										<th>이전받는 자의 보유 및 이용기간</th>
+									</tr>
+									<tr>
+										<td data-th="이전받는 자(연락처)">Koninklijke Philips N.V.</td>
+										<td data-th="소재국">[네덜란드]</td>
+										<td data-th="이전받는 자의 개인정보 이용 목적">고객정보 및 NPS Onsite Survey 등 데이터 분석</td>
+										<td data-th="개인정보 항목">
+                                            성명, 휴대폰번호, 이메일 주소, 병원명, 부서명, 직책
+										</td>
+                                        <td data-th="이전받는 자의 보유 및 이용기간"><span class="underline">3년</span> 또는 <span class="underline">동의 철회 시</span>까지 보유, 이용</td>
+									</tr>
+								</tbody>
+							</table>
+							■ 본인은 회사가 위 목적으로 본인의 개인정보를 국외에 이전하는 것에 동의합니다.<br>
+                            &#9312; (<input type="radio" name="rdo08" id="rdo0801" class="val_y"><label for="rdo0801" class="mr20">동의함</label>
+							<input type="radio" name="rdo08" id="rdo0802" class="val_n"><label for="rdo0802">동의하지않음</label>)<br>
+							<br>
+						</div>
+						<!--// 동의서 내용 -->
+						<div class="chk-group box-type01">
+							<div class="row mt10">
+								<input type="checkbox" id="agree_privacy_yn" name="privacy_yn" class="val_y">
+								<label for="agree_privacy_yn">마케팅을 위한 개인정보 수집 및 이용 동의 (선택) </label>
+								<a onclick="$('.info_privacy').toggle();">자세한 내용</a>
+							</div>
+						</div>
+						<!-- 동의서 내용 -->
+						<div id="thirdCheck" class="row mt10 info_privacy_txt info_privacy">
+							<h2>마케팅을 위한 개인정보 수집 및 이용 동의서</h2>
+							<strong>주식회사 필립스코리아 귀중</strong><br>
+							<br>
+                            주식회사 필립스코리아(“<strong>회사</strong>”)는 귀하의 개인(신용)정보를 처리하기 위하여, “개인정보 보호법” 제15조, 제17조, 제22조에 따라 귀하로부터 명시적인 동의를 받아야 합니다. 다음과 같이 귀하의 개인정보를 처리하는 것에 동의하신다면, 본 동의서의 동의란에 체크하신 후 서명하여 주시기 바랍니다.
+							<h3>1. [선택] 개인정보의 마케팅 목적 이용 및 광고성 정보 전송에 대한 동의</h3>
+							1) 개인정보의 수집∙이용 목적: <span class="underline">회사 및 관계사 상품, 서비스 안내 및 이용 권유, 마케팅, 뉴스레터 발송</span><br>
+							2) 수집∙이용 할 개인정보의 내용: 성명, 전화번호, 휴대폰번호, 이메일<br>
+							3) 보유∙이용기간: <span class="underline">3년</span> 또는 <span class="underline">동의 철회 시</span>까지 보유, 이용됩니다.<br>
+							<br>
+							■ 본인은 회사가 위 목적으로 본인의 개인정보를 수집, 이용하는 것에 동의합니다. <br>
+							&#9312; ( <input type="radio" name="rdo09" id="rdo0901" class="val_y"><label for="rdo0901" class="mr20">동의함</label>
+							<input type="radio" name="rdo09" id="rdo0902" class="val_n"><label for="rdo0902">동의하지않음</label>)<br>
+							■ 본인은 회사가 아래의 이용 권유 방법으로 광고성 정보를 전송하는 것에 동의합니다.
+							<div class="border-box">
+								&#9313; 이용권유 방법:<br>
+								<input type="radio" name="rdo10" id="rdo1001" class="val_y"><label for="rdo1001" class="mr20">전체동의</label><br class="mo-show">
+								(
+								<div class="chk-group-box">
+									<input type="checkbox" id="agree_tel" name="agree_tel" class="val_y">
+									<label for="agree_tel" class="mr10">전화</label>
+								</div>
+								<div class="chk-group-box">
+									<input type="checkbox" id="agree_sms" name="agree_sms" class="val_y">
+									<label for="agree_sms" class="mr10">문자메세지</label>
+								</div>
+								<div class="chk-group-box">
+									<input type="checkbox" id="agree_dm" name="agree_dm" class="val_y">
+									<label for="agree_dm" class="mr10">DM</label>
+								</div>
+								<div class="chk-group-box">
+									<input type="checkbox" id="agree_em" name="agree_em" class="val_y">
+									<label for="agree_em">이메일</label>
+								</div>
+								)<br>
+								<input type="radio" name="rdo10" id="rdo1002" class="val_n"><label for="rdo1002">동의하지않음</label><br>
+								상품서비스 안내 등 수집, 이용 목적달성을 위하여 동의한 안내수단으로 연락할 수 있습니다.
+							</div>
+						</div>
+						<!--// 동의서 내용 -->
+
+                        <!--220614 layer popup -->
+                        <div class="dimmed2"></div>
+                        <div class="layer-pop pop-search">
+                            <div class="row clearfix">
+                                <button type="button" class="pop-close f-right" onclick="$('.dimmed2').hide();$('.pop-search').hide();">X</button>
+                            </div>
+                            <div class="dashboard-wrapper">
+                                <input type="hidden" id="parent_id" value="pre_hospital">
+                                <!-- 화면구성 -->
+                                <!-- 검색 조건 -->
+                                <div class="widget">
+                                    <div class="widget-body">
+                                        <div class="box-search">
+                                            <ul class="search-form">
+                                                <li>
+                                                    <span class="txt01">병원명</span>
+                                                    <input type="text" name="hospital_name" id="hospital_name" placeholder="병원명을 입력해 주세요" value="">
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="hospital_search()">검색</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--// 검색 조건 -->
+                                <!-- 검색 결과 -->
+                                <div id="dt_example" class="example_alt_pagination">
+                                    <div id="cotable_wrapper" class="dataTables_wrapper no-footer">
+                                        <div class="dt-buttons"></div>
+                                        <p>총 <strong id="totalCount">00</strong>건</p>
+                                        <div class="tbl-box">
+                                            <table class="table table-condensed table-striped table-hover table-bordered pull-left dataTable no-footer" id="cotable" role="grid">
+                                                <colgroup>
+                                                    <col style="width:40%">
+                                                    <col style="width:60%">
+                                                </colgroup>
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1">병원명</th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1">주소</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tbody">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--//220614 layer popup -->
+
+						<style>
+							@media (max-width:700px) {
+								.navbar-collapse.collapse.in {
+									height: calc(100vh - 44px);
+								}
+
+								.navbar-collapse.collapse {
+									height: 0;
+								}
+							}
+							
+							main .chk-group.box-type01{
+								margin-top: 0;
+								padding-top: 0;
+								border-top: none;
+							}
+							main .chk-group.box-type01 label, main .chk-group.box-type01 a{
+								display: inline;
+							}
+
+							.info_privacy_txt {
+								border: 1px solid #ebebeb;
+								padding: 20px;
+								line-height: 1.8;
+								font-size: 13px;
+								word-break: break-all;
+								max-height: 500px;
+								overflow-y: auto;
+								display: none;
+							}
+
+							.info_privacy_txt .mr20 {
+								margin-right: 20px;
+							}
+
+							.info_privacy_txt .mr10 {
+								margin-right: 10px;
+							}
+
+							.info_privacy_txt h2 {
+								font-size: 16px;
+								text-align: center;
+								text-decoration: underline;
+								margin-top: 20px;
+								margin-bottom: 50px;
+							}
+
+							.info_privacy_txt h3 {
+								font-size: 14px;
+								font-weight: 700;
+								margin-top: 20px;
+								margin-bottom: 10px;
+							}
+							.info_privacy_txt .underline{
+								text-decoration: underline;
+							}
+
+							.info_privacy_txt .chk-group-box {
+								display: inline-block;
+							}
+
+							.info_privacy_txt input[type='radio'],
+							.info_privacy_txt input[type='checkbox'] {
+								visibility: hidden;
+								width: 0;
+							}
+
+							.info_privacy_txt input[type='radio']+label,
+							.info_privacy_txt input[type='checkbox']+label {
+								font-size: 13px;
+							}
+
+							.info_privacy_txt input[type='radio']+label:before,
+							.info_privacy_txt input[type='checkbox']+label:before {
+								content: "";
+								display: inline-block;
+								vertical-align: top;
+								width: 13px;
+								height: 13px;
+								margin-top: 4px;
+								margin-right: 4px;
+								border: 1px solid #ddd;
+							}
+
+							.info_privacy_txt input[type='radio']:checked+label:before,
+							.info_privacy_txt input[type='checkbox']:checked+label:before {
+								content: "";
+								display: inline-block;
+								vertical-align: top;
+								width: 13px;
+								height: 13px;
+								margin-top: 4px;
+								margin-right: 4px;
+								background: url(../img/check-on.png) no-repeat center;
+								background-size: 100%;
+							}
+
+							.info_privacy_txt .half-table,
+							.info_privacy_txt .rwd-table {
+								width: 100%;
+								margin-top: 10px;
+								margin-bottom: 10px;
+							}
+							
+							.info_privacy_txt table th{
+								word-break: keep-all;
+							}
+
+							.info_privacy_txt .half-table tr {
+								border-top: 1px solid #ddd;
+								border-bottom: 1px solid #ddd;
+							}
+
+							.info_privacy_txt .half-table th,
+							.info_privacy_txt .half-table td {
+								padding: 0.5em;
+								font-size: 13px;
+								text-align: center;
+								border-left: 1px solid #ddd;
+								word-break: break-all;
+							}
+
+							.info_privacy_txt .half-table th:first-child,
+							.info_privacy_txt .half-table td:first-child {
+								border-left: none;
+							}
+
+							.info_privacy_txt .rwd-table th {
+								display: none;
+							}
+
+							.info_privacy_txt .rwd-table td {
+								display: block;
+							}
+
+							.info_privacy_txt .rwd-table td:first-child {
+								padding-top: 0.5em;
+							}
+
+							.info_privacy_txt .rwd-table td:last-child {
+								padding-bottom: 0.5em;
+							}
+
+							.info_privacy_txt .rwd-table td:before {
+								content: attr(data-th) ": ";
+								font-weight: normal;
+								display: block;
+								vertical-align: top;
+							}
+
+							.info_privacy_txt .rwd-table th,
+							.info_privacy_txt .rwd-table td {
+								text-align: left;
+								font-size: 13px;
+							}
+
+							.info_privacy_txt .rwd-table {
+								overflow: hidden;
+							}
+
+							.info_privacy_txt .rwd-table th,
+							.info_privacy_txt .rwd-table td {
+								margin: 0.5em 0;
+							}
+
+							.info_privacy_txt .border-box {
+								border: 1px solid #ddd;
+								padding: 10px;
+								margin: 10px 0;
+							}
+
+							.info_privacy_txt .sign-box {
+								text-align: right;
+								line-height: 30px;
+							}
+
+							.info_privacy_txt .sign-box input[type='number'] {
+								display: inline-block;
+								vertical-align: top;
+								padding: 0;
+								margin-left: 5px;
+								margin-right: 5px;
+								width: 40px;
+								text-align: center;
+								font-size: 13px;
+								height: 30px;
+								line-height: 28px;
+							}
+
+							.info_privacy_txt .sign-box input[type='number'].num-year {
+								width: 60px;
+							}
+
+							.info_privacy_txt .sign-table {
+								margin-top: 20px;
+								margin-bottom: 50px;
+								width: 240px;
+								float: right;
+							}
+
+							.info_privacy_txt .sign-table td {
+								text-align: right;
+							}
+
+							.info_privacy_txt .sign-table th,
+							.info_privacy_txt .sign-table td {
+								line-height: 30px;
+								padding: 5px 0;
+							}
+
+							.info_privacy_txt .sign-table input[type='text'] {
+								display: inline-block;
+								vertical-align: top;
+								padding: 0;
+								width: 120px;
+								text-align: center;
+								font-size: 13px;
+								height: 30px;
+								line-height: 28px;
+							}
+
+							@media (min-width: 600px) {
+								.info_privacy_txt .mo-show {
+									display: none;
+								}
+
+								.info_privacy_txt .rwd-table th,
+								.info_privacy_txt .rwd-table td {
+									display: table-cell;
+									padding: 0.25em 0.5em;
+									border-left: 1px solid #ddd;
+								}
+
+								.info_privacy_txt .rwd-table th:first-child,
+								.info_privacy_txt .rwd-table td:first-child {
+									padding-left: 0;
+									border-left: none;
+								}
+
+								.info_privacy_txt .rwd-table th:last-child,
+								.info_privacy_txt .rwd-table td:last-child {
+									padding-right: 0;
+								}
+
+								.info_privacy_txt .rwd-table td:before {
+									display: none;
+								}
+
+								.info_privacy_txt .rwd-table th,
+								.info_privacy_txt .rwd-table td {
+									padding: 1em !important;
+									text-align: center;
+								}
+
+								.info_privacy_txt .rwd-table tr {
+									border-top: 1px solid #ddd;
+									border-bottom: 1px solid #ddd;
+								}
+							}
+							@media (max-width: 600px){
+									.info_privacy_txt .mo-hide{
+									display: none;
+								}
+							}
+                            /* 220614 추가 */
+                            .pop-search {display: none; padding-top: 10px;top: 50%;}
+                            .pop-search p{text-align: left; font-size: 13px;margin-bottom: 10px;}
+                            .pop-search p strong{color: #007bff;font-weight: 400;}
+                            .pop-search .widget{border: 1px solid #b9bbc7;padding: 20px 10px;margin-bottom: 20px;}
+                            .pop-search .pop-close{background: transparent;border: none; padding: 5px 0 5px 10px ; margin-bottom: 5px;cursor: pointer;}
+                            .pop-search .search-form li{text-align: left;}
+                            .pop-search .search-form li span, .pop-search .search-form li input[type='text']{display: inline-block;background:#fff;font-size: 15px;}
+                            .pop-search .search-form li span{width: 45px;line-height: 30px}
+                            .pop-search .search-form li input[type='text']{width: calc(86% - 80px);border:1px solid #b9bbc7;padding: 6px 10px;box-sizing: border-box;}
+                            .layer-pop.pop-search .btn-primary{margin-top: 3px;background-color:#007bff; border: none; color:#fff;border-radius: 2px;padding: 0.55rem 0.75rem; line-height: 1.5;font-size: 15px;}
+                            .pop-search .dataTable {width: 100%;max-width: 100%;}
+                            .pop-search .tbl-box{overflow-y: auto;overflow-x: hidden;max-height: 50vh;border: 1px solid #b9bbc7;}
+                            .pop-search .tbl-box tr:hover{color: #007bff}
+                            .pop-search .dataTable th, .pop-search .dataTable td{border-top: 1px solid #b9bbc7; padding: 10px; font-weight: 400; font-size: 13px;}
+                            .pop-search .dataTable thead th, .pop-search .dataTable thead td{border-top: 0;}
+                            .pop-search .dataTable th span, .pop-search .dataTable td span{word-break: break-all}
+                            .pop-search .dataTable th:first-of-type, .pop-search .dataTable td:first-of-type{border-right: 1px solid #b9bbc7; text-align: center;max-width: 191px}
+                            .pop-search .dataTable tbody tr:nth-of-type(odd){background-color: rgba(0,0,0,.05);}
+                            .pop-search .dataTables_paginate .paginate_button{background: #f2f2f2; margin: 1px; padding: 5px 10px;font-size: 12px; cursor:pointer}
+                            .pop-search .dataTables_paginate .paginate_button.current{background:#007bff; color: #fff;}
+						</style>
+						<script>
+							
+							
+							$(document).ready(function() {
+								$("#firstCheck").find(".val_n").prop("checked",true);
+								$("#thirdCheck").find(".val_n").prop("checked",true);
+								
+								
+								/* 전체 선택 */
+								$("#agree_all").click(function() {
+									if ($("#agree_all").is(":checked")) {
+										$(".val_y").prop("checked", true);
+										$("#firstCheck").find(".val_y").prop("checked",true)
+										$("#thirdCheck").find(".val_y").prop("checked",true)
+										
+										
+									} else {
+										$(".val_y").prop("checked", false);
+										$("#firstCheck").find(".val_n").prop("checked",true)
+										$("#thirdCheck").find(".val_n").prop("checked",true)
+										$("#rdo1002").trigger("click");
+										
+									}
+								});
+								/* 이용권유 방법 전체 동의 */
+								$("#rdo1001").click(function() {
+									$(".chk-group-box .val_y").prop("checked", true);
+								});
+								/* 이용권유 방법 동의 하지 않음 */
+								$("#rdo1002").click(function() {
+									$(".chk-group-box .val_y").prop("checked", false);
+								});
+								$(".chk-group-box").find(".val_y").click(function(){
+									if($(".chk-group-box").find(".val_y:checked").length == 0){
+										$("#rdo1002").prop("checked",true);
+										if($("#thirdCheck").find(".val_y:checked").length == 6){
+											$("#agree_privacy_yn").prop("checked",true);
+											if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+												$("#agree_all").prop("checked",true)
+											}
+										}else{
+											$("#agree_privacy_yn").prop("checked",false);
+											if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+												$("#agree_all").prop("checked",false)
+											}
+										}
+										
+									}else if($(".chk-group-box").find(".val_y:checked").length>0 && $(".chk-group-box").find(".val_y:checked").length<4){
+										$("#rdo1002").prop("checked",false);
+										$("#rdo1001").prop("checked",false);
+										if($("#thirdCheck").find(".val_y:checked").length == 6){
+											$("#agree_privacy_yn").prop("checked",true);
+											if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+												$("#agree_all").prop("checked",true)
+											}
+										}else{
+											$("#agree_privacy_yn").prop("checked",false);
+											if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+												$("#agree_all").prop("checked",false)
+											}
+										}
+									}else{
+										$("#rdo1001").prop("checked",true);
+										if($("#thirdCheck").find(".val_y:checked").length == 6){
+											$("#agree_privacy_yn").prop("checked",true);
+											if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+												$("#agree_all").prop("checked",true)
+											}
+										}else{
+											$("#agree_privacy_yn").prop("checked",false);
+											if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+												$("#agree_all").prop("checked",false)
+											}
+										}
+									}
+								
+								});
+								$("#firstCheck").find("input[type=radio]").click(function(){
+									if($("#firstCheck").find(".val_y:checked").length == 3){
+										$("#agree_private_yn").prop("checked",true);
+										if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+											$("#agree_all").prop("checked",true)
+										}
+									}else{
+										$("#agree_private_yn").prop("checked",false);
+										if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+											$("#agree_all").prop("checked",false)
+										}
+									}
+								});
+
+								$("#thirdCheck").find("input[type=radio]").click(function(){
+									if($("#thirdCheck").find(".val_y:checked").length == 6){
+										$("#agree_privacy_yn").prop("checked",true);
+										if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+											$("#agree_all").prop("checked",true)
+										}
+									}else{
+										$("#agree_privacy_yn").prop("checked",false);
+										if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+											$("#agree_all").prop("checked",false)
+										}
+									}
+								});
+								$("#rdo1002").click(function(){
+									$(".chk-group-box").find(".val_y").prop(false);
+								});
+								
+								$("#agree_private_yn").click(function(){
+							        if($("#agree_private_yn").is(":checked")){
+							        	$("#firstCheck").find(".val_y").prop("checked",true);
+							        	if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+											$("#agree_all").prop("checked",true)
+										}
+							        }else{
+							        	$("#firstCheck").find(".val_n").prop("checked",true);
+							        	if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+											$("#agree_all").prop("checked",false)
+										}
+							        }
+								});
+								
+
+								$("#agree_privacy_yn").click(function(){
+							        if($("#agree_privacy_yn").is(":checked")){
+							        	$("#thirdCheck").find(".val_y").prop("checked",true);
+							        	if($("#agree_private_yn").is(":checked") && $("#agree_privacy_yn").is(":checked")){
+											$("#agree_all").prop("checked",true)
+										}
+							        }else{
+							        	$("#thirdCheck").find(".val_n").prop("checked",true);
+							        	$("#rdo1002").trigger("click");
+							        	if(!($("#agree_private_yn").is(":checked")) || !($("#agree_privacy_yn").is(":checked"))){
+											$("#agree_all").prop("checked",false)
+										}
+							        }
+								});
+								
+								
+							});
+							function doAgreeUser(){
+								
+								if ($("#agree_name").val() == null || $("#agree_name").val() == "") {
+									alert("이름을 입력하지 않았습니다");
+									return;
+								}
+								if ($("#agree_mobile").val() == null || $("#agree_mobile").val() == "") {
+									alert("핸드폰 번호를 입력하지 않았습니다");
+									return;
+								}else if ((isNaN($("#agree_mobile").val()))) {
+									alert("핸드폰 번호는 숫자만 가능합니다.");
+									$("#agree_mobile").val("");
+									return;
+								}
+                                if ($("#hospital").val() == null || $("#hospital").val() == "") {
+                                    alert("병원명을 선택하지 않았습니다");
+                                    return;
+                                }
+                                if ($("#position").val() == null || $("#position").val() == "") {
+                                    alert("직책을 선택하지 않았습니다");
+                                    return;
+                                }
+
+								if (!($("#firstCheck").find(".val_y:checked").length == 3)) {
+									alert("개인정보의 수집, 이용 및 이전 3자 제공(당사 계열사 및 국외 포함)\n 및 자동 출금을 위한 신용정보 수집, 이용 및 이전 주민등록번호\n 처리 안내에 대해 동의를 하지 않았습니다.");
+									return;
+								}
+								
+								
+								if($("#rdo0901").prop("checked")){
+									$("#marketing1_yn").val("Y");
+									
+								}
+								if($("#rdo1001").prop("checked")){
+									$("#marketing2_all").val("Y");
+									
+								}
+								if($("#agree_tel").prop("checked")){
+									$("#marketing2_tel").val("Y");
+									
+								}
+								if($("#agree_sms").prop("checked")){
+									$("#marketing2_sms").val("Y");
+									
+								}
+								if($("#agree_dm").prop("checked")){
+									$("#marketing2_dm").val("Y");
+									
+								}
+								if($("#agree_em").prop("checked")){
+									$("#marketing2_email").val("Y");
+									
+								}
+								
+								
+								var frmData = $("#frmAgree").serializeObject();
+								
+								
+								$.ajax({
+						            type: "post",
+						            url: "/complete/json/agree2",
+						            contentType: "application/json",
+						            data: JSON.stringify(frmData),
+						            success: function (result) {
+										if(result.code == "0001"){
+											var dimm = document.getElementById("dimmed");
+											dimm.style.display = "block";
+											
+										}else{
+											alert(result.msg);
+										}
+						            },
+						            error: function (xhr, textStatus, errorThrown) {
+
+						            	
+						            }
+						        }).done(function () {
+
+						        });
+								
+								
+							}
+                            function hospital_modal(){
+                                $('.dimmed2').show();
+                                $('.pop-search').show();
+                                $("#hospital_name").val("");
+                                $("#tbody").html("");
+                                $("#totalCount").html("")
+                            }
+                            function hospital_select(name){
+                                $("#hospital").val(name);
+                                $('.dimmed2').hide();
+                                $('.pop-search').hide();
+                                $("#hospital_name").val("");
+                                $("#tbody").html("");
+                                $("#totalCount").html("")
+
+                            }
+                            function hospital_search(){
+                                var search_text = $("#hospital_name").val();
+                                $.ajax({
+                                    type: "get",
+                                    url: "/member/json/hospital/list",
+                                    contentType: "application/json",
+                                    data: {
+                                        name:search_text
+                                    },
+                                    success: function (result) {
+                                        if(result.length>5000){
+                                            alert("검색결과가 너무 많습니다.");
+                                        }else{
+                                            $("#tbody").html("");
+                                            $("#totalCount").html("")
+                                            var html = ""
+                                            $("#totalCount").html(result.length)
+                                            $(".tbl-box").scrollTop(0)
+                                            for(var i=0;i<result.length;i++){
+                                                if(i%2==1){
+                                                    html += '<tr class="odd" onclick = "hospital_select('+"'"+result[i].name+"'"+')">'
+                                                    html += '<td><span>'+result[i].name+'</span></td>'
+                                                    html += '<td><span>'+result[i].address+'</span></td>'
+                                                    html += '</tr>'
+                                                }else{
+                                                    html += '<tr class="even" onclick = "hospital_select('+"'"+result[i].name+"'"+')">'
+                                                    html += '<td><span>'+result[i].name+'</span></td>'
+                                                    html += '<td><span>'+result[i].address+'</span></td>'
+                                                    html += '</tr>'
+                                                }
+                                            }
+                                            $("#tbody").html(html);
+                                        }
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+
+
+                                    }
+                                }).done(function () {
+
+                                });
+                            }
+
+						</script>
+						<!--// 220216 수정 -->
+						<button type="button" class="btn-submit" onclick="javascript:doAgreeUser();">확인</button>
+					</fieldset>
+				</form>
+			</div>
+		</main>
+	</div>
+		<footer>
+	        <div class="footer-top">
+	            <div class="container">
+	                <p><strong>필립스코리아&nbsp;</strong>대표이사 :&nbsp;김동희 주소 :&nbsp;서울시 중구&nbsp;소월로2길 30(남대문로 5가) 사업자등록번호&nbsp;: 106-81-02284</p>
+	                <p>통신판매업 신고&nbsp;:&nbsp;제&nbsp;2016-서울중구-1138 [<u><a href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=1068102284&amp;apv_perm_no" target="_blank" data-track-description="사업자정보확인" data-track-type="track-conversion" data-track-name="interaction" data-track-compid="gc11" data-is-internal="true">사업자정보확인</a></u>] 의료기기판매업 신고&nbsp;:&nbsp;제&nbsp;2998호</p>
+	                <p>필립스 고객센터 소비자 가전 : 080-600-6600&nbsp;슬립케어 : 080-500-0004&nbsp; 의료기기 : 080-372-7777</p>
+	            </div>
+	        </div>
+	        <div class="footer-bottom">
+	            <div class="container">
+	                <div class="footer-01 clearfix">
+	                    <div class="footer-sns">
+	                        <p>필립스 소셜 미디어</p>
+	                        <ul class="footer-sns-list">
+	                            <li>
+	                                <a data-track-type="track-conversion" data-track-name="follow_us" data-track-compid="gc23v2" data-track-servicename="youtube" href="http://www.youtube.com/Philips" target="_blank" title="(새 창에서 열립니다)" rel="noopener noreferrer" aria-label=""><img src="../img/ico-youtube.png" alt="YouTube 아이콘"></a>
+	                            </li>
+	                            <li>
+	                                <a data-track-type="track-conversion" data-track-name="follow_us" data-track-compid="gc23v2" data-track-servicename="twitter" href="https://twitter.com/Philips" target="_self" title="(같은 창에서 열립니다)" rel="" aria-label=""><img src="../img/ico-twitter.png" alt="Twitter 아이콘"> </a>
+	                            </li>
+	                            <li>
+	                                <a data-track-type="track-conversion" data-track-name="follow_us" data-track-compid="gc23v2" data-track-servicename="facebook" href="http://www.facebook.com/Philips.Kor/" target="_self" title="(같은 창에서 열립니다)" rel="" aria-label=""><img src="../img/ico-facebook.png" alt="Facebook 아이콘"> </a>
+	                            </li>
+	                            <li>
+	                                <a data-track-type="track-conversion" data-track-name="follow_us" data-track-compid="gc23v2" data-track-servicename="pinterest" href="http://www.pinterest.com/philipsglobal/" target="_blank" title="(새 창에서 열립니다)" rel="noopener noreferrer" aria-label=""><img src="../img/ico-pinterest.png" alt="Pinterest 아이콘"></a>
+	                            </li>
+	                        </ul>
+	                    </div>
+	                    <div class="p-philips-shield"></div>
+	                    <div class="footer-link01">
+	                        <p class="p-main-footer-language"> <a href="https://www.philips.com/global/country_selector.page?&amp;_ga=2.76221010.698340457.1612766976-464485662.1612766976" data-track-type="track-ajax" data-track-pagename="country_selector:footer:한국 - 한국어" data-type="o" data-track-compid="n_05"> <span class="p-footer-country">Select country/language</span> <span class="p-footer-country-list">한국 - 한국어</span> </a> </p>
+	                        <div class="footer-category-box">
+	                            <p class="p-main-footer-category"><span>필립스 사업부 선택</span></p>
+	                            <div class="category-list-box">
+	                                <ul class="f-category-list">
+	                                    <li> <a href="https://www.philips.co.kr/c-m/consumer-products" target="_self" title="" data-track-type="track-ajax" data-track-pagename="country_selector:footer:select_소비자용 가전 및 조명" data-type="o" data-track-compid="n_06">소비자용 가전 및 조명</a> </li>
+	                                    <li> <a href="https://www.philips.co.kr/healthcare" target="_self" title="" data-track-type="track-ajax" data-track-pagename="country_selector:footer:select_헬스케어" data-type="o" data-track-compid="n_06">헬스케어</a> </li>
+	                                    <li> <a href="https://www.lighting.philips.co.kr/" target="_self" title="" data-track-type="track-ajax" data-track-pagename="country_selector:footer:select_조명" data-type="o" data-track-compid="n_06">조명</a> </li>
+	                                    <li> <a href="https://www.philips.co.kr/about/company/index.page" target="_self" title="" data-track-type="track-ajax" data-track-pagename="country_selector:footer:select_필립스 소개" data-type="o" data-track-compid="n_06">필립스 소개</a> </li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="footer-02">
+	                    <ul class="p-grid">
+	                        <li>
+	                            <a href="https://www.careers.philips.com/kr/kr" target="_self" title="(같은 창에서 열립니다)" rel="" data-track-type="track-nav-content" data-track-compid="n14" data-is-internal="true" data-track-navid="채용 정보" data-track-navdest="https:::www.careers.philips.com:kr:kr" class="p-link-color">
+	                                <span class="p-text">채용 정보</span>
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="https://www.philips.co.kr/c-w/support-home/support-contact-page.html" target="_self" title="(같은 창에서 열립니다)" rel="" data-track-type="track-nav-content" data-track-compid="n14" data-is-internal="false" data-track-navid="이메일 문의" data-track-navdest=":content:b2c:ko_kr:support-home:support-contact-page.html" class="p-link-color">
+	                                <span class="p-text">이메일 문의</span>
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="https://www.philips.co.kr/a-w/site-owner.html" target="_self" title="(같은 창에서 열립니다)" rel="" data-track-type="track-nav-content" data-track-compid="n14" data-is-internal="false" data-track-navid="Philips" data-track-navdest=":content:corporate:ko_kr:site-owner.html" class="p-link-color">
+	                                <span class="p-text">Philips</span>
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="https://www.philips.co.kr/a-w/privacy-notice.html" target="_self" title="(같은 창에서 열립니다)" rel="" data-track-type="track-nav-content" data-track-compid="n14" data-is-internal="false" data-track-navid="개인정보 처리방침" data-track-navdest=":content:corporate:ko_kr:privacy-notice.html" class="p-link-color">
+	                                <span class="p-text">개인정보 처리방침</span>
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="https://www.philips.co.kr/a-w/terms-of-use.html" target="_self" title="(같은 창에서 열립니다)" rel="" data-track-type="track-nav-content" data-track-compid="n14" data-is-internal="false" data-track-navid="법적고지" data-track-navdest=":content:corporate:ko_kr:terms-of-use.html" class="p-link-color">
+	                                <span class="p-text">법적고지</span>
+	                            </a>
+	                        </li>
+	                        <li>
+	                            <a href="https://www.philips.co.kr/a-w/cookie-notice.html" target="_self" title="(같은 창에서 열립니다)" rel="" data-track-type="track-nav-content" data-track-compid="n14" data-is-internal="false" data-track-navid="필립스 쿠키 정책" data-track-navdest=":content:corporate:ko_kr:cookie-notice.html" data-cookie-settings="" class="p-link-color" data-eddl-instance="0">
+	                                <span class="p-text">필립스 쿠키 정책</span>
+	                            </a>
+	                        </li>
+	                    </ul>
+	                    <p class="txt-copyright">&copy; Koninklijke Philips N.V., 2004 - 2021. 판권 소유.</p>
+	                </div>
+	            </div>
+	        </div>
+	    </footer>
+	<div class="dimmed" id="dimmed">
+		<div class="layer-pop" id="layer-pop">
+			<p>서명완료되었습니다 감사합니다.</p>
+			<a href="javascript:location.href='/resultMsg';" class="btn-submit">종 료</a>
+		</div>
+	</div>
+</body>
+
+</html>

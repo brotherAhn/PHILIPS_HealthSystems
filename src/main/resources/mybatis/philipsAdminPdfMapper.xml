@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.philips.healthSystems.admin.mapper.PhilipsAdminPdfMapper">
+
+	<select id="countUserInfoResult" parameterType="int" resultType="int">
+		SELECT count(1) as cnt
+			FROM tbl_health_targetUser
+			where UserPkid  = #{UserPkid}
+			AND state = "COM"
+	</select>
+
+	<select id="getUserInfoResult" parameterType="int" resultType="com.philips.healthSystems.admin.response.AdminUserResultForPDFResponse">
+		SELECT name, mobile, marketing1_yn, marketing2_all, marketing2_tel, marketing2_sms, marketing2_dm, marketing2_email, DATE_FORMAT(agree_dt,'%Y년 %m월 %d일 %H시 %i분 %s초 ') as agree_dt ,DATE_FORMAT(agree_dt,'%Y%m%d%H%i%s') as file_name
+			FROM tbl_health_targetUser
+			where UserPkid  = #{UserPkid}
+			AND state = "COM"
+	</select>
+	
+	
+</mapper>
